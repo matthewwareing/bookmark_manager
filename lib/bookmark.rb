@@ -1,9 +1,10 @@
-class Bookmark
-    attr_reader :list
-    def initialize
-        @list = ['https://www.ft.com',
-        'https://www.economist.com',
-        'https://www.dailystar.com']
-    end
+require 'pg'
 
+class Bookmark
+
+    def self.all
+        connection = PG.connect(dbname: "bookmark_manager")
+        result = connection.exec("SELECT * FROM bookmarks")
+        result.map{|bookmark| bookmark['url'] }
+    end
 end
